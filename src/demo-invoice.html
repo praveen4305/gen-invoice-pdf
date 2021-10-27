@@ -1,0 +1,280 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Arial";
+      }
+
+      .heading {
+        margin-left: 400px;
+      }
+
+      .seperationBar {
+        background-color: #000;
+        height: 2px;
+      }
+
+      #content {
+        padding: 0.5rem;
+        display: flex;
+      }
+
+      #left,
+      #right {
+        width: 50%;
+      }
+
+      #left {
+        float: left;
+        margin-right: 40px;
+      }
+
+      #right {
+        float: right;
+        margin-left: 40px;
+      }
+
+      #left span,
+      #right span {
+        display: block;
+      }
+
+      #final-billing {
+        display: flex;
+        flex-direction: column;
+        float: right;
+        margin-top: 20px;
+      }
+
+      h2 {
+        text-decoration: underline;
+        margin: 5px 0 0 295px;
+        font-size: 1.2em;
+      }
+
+      #corners {
+        border-radius: 25px;
+        border: 1px solid #000;
+        padding: 20px;
+        width: 270px;
+        height: 120px;
+      }
+
+      #corners p {
+        line-height: 8px;
+        font-weight: bold;
+        font-size: 1em;
+      }
+
+      .address-paragraph {
+        margin-top: 8px;
+      }
+
+      .text-style {
+        text-decoration: underline;
+        margin: auto;
+        font-size: 1em;
+      }
+
+      .text-margin {
+        margin: 0 25px 5px;
+        text-decoration: underline;
+        font-size: 16px;
+      }
+
+      .info-margin {
+        margin: 0 20px 14px;
+        font-weight: bold !important;
+        font-size: 16px;
+      }
+
+      .final-amount {
+        margin: 0 20px 14px;
+        font-size: 16px;
+      }
+
+      #invoice-items {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table tbody td {
+        border: 1px solid #000;
+        text-align: center;
+        font-size: 12px!important;
+        height: 30px;
+      }
+
+      table thead th {
+        border: 1px solid #000;
+        background-color: #a6d66e;
+        text-align: center;
+        font-size: 12px!important;
+        height: 30px;
+      }
+
+      .table-bottom {
+        margin-left: 320px;
+      }
+
+      .total-amount {
+        margin-left: 50px;
+      }
+
+      .total-tax-amount {
+        margin-left: 100px;
+      }
+
+      .total-amount-last-value {
+        margin-left: 50px;
+      }
+
+      .bold-text {
+        font-weight: bold;
+      }
+
+      .amount-words {
+        border: 1px solid #000;
+        background-color: #a6d66e;
+        text-align: center;
+        margin-top: 120px;
+        margin-bottom: 0px;
+      }
+
+      .final-note {
+        text-align: center;
+        margin-top: 70px;
+      }
+
+      .total-move-right {
+        margin-left: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div class="heading">
+        <p style="font-weight: bold; color: black; font-size: 20px">
+          {{{heading.name}}}
+        </p>
+        <span>{{{heading.address_line_one}}}</span><br />
+        <span>{{{heading.address_line_two}}}</span><br />
+        <span>{{{heading.email}}}</span><br />
+        <span>{{{heading.website}}}</span><br />
+        <span>{{{heading.trn}}}</span>
+      </div>
+    </div>
+    <div class="seperationBar"></div>
+    <div>
+      <h2>TAX INVOICE</h2>
+    </div>
+    <div id="content">
+      <div id="left">
+        <div id="corners">
+          <h3 class="text-style">Billing Address:</h3>
+          <p class="address-paragraph">{{{billing_address.name}}}</p>
+          <p>{{{billing_address.area}}}</p>
+          <p>{{{billing_address.town}}}</p>
+          <p>{{{billing_address.country}}}</p>
+        </div>
+      </div>
+      <div id="right">
+        <div id="corners">
+          <h3 class="text-style">Shipping Address:</h3>
+          <p class="address-paragraph">{{{shipping_address.name}}}</p>
+          <p>{{{shipping_address.area}}}</p>
+          <p>{{{shipping_address.town}}}</p>
+          <p>{{{shipping_address.country}}}</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-margin">Order Information:</h3>
+      <div id="content">
+        <div id="left">
+          <span class="info-margin"
+            >Invoice No&emsp;&emsp;&nbsp;:&emsp;&emsp;{{{invoice_no}}}</span
+          >
+          <span class="info-margin"
+            >Invoice Date&emsp;&nbsp;:&emsp;&emsp;{{{invoice_date}}}</span
+          >
+          <span class="info-margin"
+            >Delivery Date&emsp;:&emsp;&emsp;{{{del_date}}}</span
+          >
+        </div>
+        <div id="right">
+          <span class="info-margin"
+            >Order
+            No&emsp;&emsp;&emsp;&emsp;&emsp;:&emsp;&emsp;{{{order_no}}}</span
+          >
+          <span class="info-margin"
+            >Payment Method&emsp;&nbsp;:&emsp;&emsp;{{{payment_method}}}</span
+          >
+          <span class="info-margin"
+            >Currency&emsp;&emsp;&emsp;&emsp;&emsp;:&emsp;&emsp;{{{currecy}}}</span
+          >
+        </div>
+      </div>
+    </div>
+    <div>
+      <table id="invoice-items">
+        <thead>
+          <tr>
+            {{#each invoiceAmount.head}}
+            <th>{{this}}</th>
+            {{/each}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each invoiceAmount.items}}
+          <tr>
+            <td>{{S_No}}</td>
+            <td>{{STOKE_CODE}}</td>
+            <td>{{DESCRIPTION}}</td>
+            <td>{{QTY}}</td>
+            <td>{{RATE}}</td>
+            <td>{{DISCOUNT_AMOUNT}}</td>
+            <td>{{TAXABLE_AMOUNT}}</td>
+            <td>{{TAX}}</td>
+            <td>{{TAX_AMOUNT}}</td>
+            <td>{{TOTAL_AMOUNT}}</td>
+          </tr>
+          {{/each}}
+          <tr>
+            <td colspan="6">Delivery Charges</td>
+            <td>{{delivery_charges.TAXABLE_AMOUNT}}</td>
+            <td>{{delivery_charges.TAX}}</td>
+            <td>{{delivery_charges.TAX_AMOUNT}}</td>
+            <td>{{delivery_charges.TOTAL_AMOUNT}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <span class="table-bottom">
+        <span class="bold-text">Total</span>
+        <span class="total-amount bold-text">{{{total_amount}}}</span>
+        <span class="total-tax-amount bold-text">{{{tax}}}</span>
+        <span class="total-amount-last-value bold-text">{{{total}}}</span>
+      </span>
+    </div>
+    <div id="final-billing">
+      <span class="final-amount total-move-right"
+        >Taxable Amount&emsp;&emsp;&nbsp;:&emsp;&emsp;455.00</span
+      >
+      <span class="final-amount total-move-right"
+        >Tax&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;:&emsp;&emsp;22.75</span
+      >
+      <span class="info-margin total-move-right"
+        >TOTAL&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;:&emsp;&emsp;477.75</span
+      >
+    </div>
+      <p class="amount-words">Amount in words: Dirhams Four Hundred Seventy-Seven And Seventy-Five Fils Only</p>
+    <div>
+      <h3 style="text-decoration: underline">REMARKS</h3>
+    </div>
+    <div>
+      <p class="final-note">
+        This is system generated Invoice, no signature required.
+      </p>
+    </div>
+  </body>
+</html>
